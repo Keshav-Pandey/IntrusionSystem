@@ -12,8 +12,9 @@ function updateMobileData(data) {
 function updater(data) {
   var isHome = false;
   for (var key in mobiles) {
-    if (dictionary.hasOwnProperty(key)) {           
-      isHome = isHome || mobiles[key];
+    if (mobiles.hasOwnProperty(key)) {     
+      var isTrue = (mobiles[key] == "true");      
+      isHome = isHome || isTrue;
     }
   }
   if(!isHome) {
@@ -84,4 +85,14 @@ function publishMobileInfo() {
 
 saveClientID();
 saveAddress();
-setInterval(publishMobileInfo,1000);
+setInterval(publishMobileInfo,30000);
+
+//test function for alert
+function test(message) {
+  client.send("Alert", "Alert", qos=0);
+}
+
+//test function for mobile
+function test2(message) {
+  client.send("Mobile", message, qos=0);
+}
