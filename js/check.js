@@ -1,11 +1,25 @@
 //Initialize last heartbeat to now
 var lastHeartBeat = new Date();
+//Mobiles dictionary to save mobile info
+var mobiles = {};
+
+//Update the mobile data
+function updateMobileData(data) {
+    mobiles[data.split(":")[0]] = data.split(":")[1];
+}
 
 //Update the house security status
 function updater(data) {
-    getLocation();
+  var isHome = false;
+  for (var key in mobiles) {
+    if (dictionary.hasOwnProperty(key)) {           
+      isHome = isHome || mobiles[key];
+    }
+  }
+  if(!isHome) {
     document.getElementById("houseGif").innerHTML = "<div style=\"width:100%;height:0;padding-bottom:56%;position:relative;\"><iframe src=\"https://giphy.com/embed/2siaob7JBzxLd8Qx9u\" width=\"100%\" height=\"100%\" style=\"position:absolute\" frameBorder=\"0\" class=\"giphy-embed\" allowFullScreen></iframe></div><p><a href=\"https://giphy.com/gifs/laffmobbslafftracks-trutv-laff-mobbs-tracks-lm118-2siaob7JBzxLd8Qx9u\">via GIPHY</a></p>";
     alert("There has been a break in!");
+  }
 }
 
 // Get the current location
@@ -35,7 +49,9 @@ function reportPosition(position) {
   var lat = position.coords.latitude;
   var long = position.coords.longitude;
   if (lat - localStorage.lat + long - localStorage.long > 0.001){
-
+    client.send("Mobile", "Mobile" + localStorage.clientID + ":false", qos=0);
+  } else {
+    client.send("Mobile", "Mobile" + localStorage.clientID + ":true", qos=0);
   }
 }
 
@@ -62,6 +78,10 @@ function saveClientID(){
   }
 }
 
+function publishMobileInfo() {
+  getLocation();
+}
+
 saveClientID();
 saveAddress();
-setInterval(publish(topic, clientID + "", qos=0),30000);
+setInterval(publishMobileInfo,1000);
