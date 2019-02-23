@@ -1,13 +1,14 @@
-//get the table element
-var table = document.getElementById("photonTable");
+//Initialize last heartbeat to now
 var lastHeartBeat = new Date();
+
 //Update the house security status
 function updater(data) {
+    getLocation();
     document.getElementById("houseGif").innerHTML = "<div style=\"width:100%;height:0;padding-bottom:56%;position:relative;\"><iframe src=\"https://giphy.com/embed/2siaob7JBzxLd8Qx9u\" width=\"100%\" height=\"100%\" style=\"position:absolute\" frameBorder=\"0\" class=\"giphy-embed\" allowFullScreen></iframe></div><p><a href=\"https://giphy.com/gifs/laffmobbslafftracks-trutv-laff-mobbs-tracks-lm118-2siaob7JBzxLd8Qx9u\">via GIPHY</a></p>";
     alert("There has been a break in!");
 }
-var x = document.getElementById("demo");
 
+// Get the current location
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(reportPosition);
@@ -16,6 +17,7 @@ function getLocation() {
   }
 }
 
+// get the current location and save it
 function getHomeLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(savePosition);
@@ -30,8 +32,11 @@ function savePosition(position) {
 }
 
 function reportPosition(position) {
-  position.coords.latitude +
-  position.coords.longitude;
+  var lat = position.coords.latitude;
+  var long = position.coords.longitude;
+  if (lat - localStorage.lat + long - localStorage.long > 0.001){
+
+  }
 }
 
 function trackLife(time){
@@ -45,10 +50,18 @@ function trackLife(time){
 
 function saveAddress(){
     if (!localStorage.lat) {
-        prompt("Shall we save your present location as your home address?","Yes");
+        confirm("Shall we save your present location as your home address?");
         getHomeLocation();
     }
 }
 
+//Save client id the first time
+function saveClientID(){
+  if (!localStorage.clientID) {
+    localStorage.clientID = prompt("Please enter your client name");
+  }
+}
+
+saveClientID();
 saveAddress();
-getLocation();
+setInterval(publish(topic, clientID + "", qos=0),30000);
