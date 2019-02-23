@@ -1,5 +1,5 @@
 // Create a client for connection
-var client = new Paho.MQTT.Client("128.237.181.149", Number(9002), "MobClientSubs" + localStorage.clientID );
+var client = new Paho.MQTT.Client("localhost", Number(9002), "MobClientSubs" + localStorage.clientID );
 
 //Assign handlers for connection
 client.onConnectionLost = onConnectionLost;
@@ -16,6 +16,8 @@ function onConnect() {
   client.subscribe("Alert");
   //Susbcribe to Heartbeat
   client.subscribe("Heartbeat");
+  //Susbcribe to Mobile
+  client.subscribe("Mobile");
 }
 
 // Handler for connection lost
@@ -32,8 +34,10 @@ function onMessageArrived(message) {
   console.log("Message Arrived : " + message.payloadString);
   //if its a hearbeat track it or else update status
   if(message.payloadString == "Alive"){
-      trackLife(new Date());
+    trackLife(new Date());
+  } else if (message.payloadString.includes("Mobile")){
+    updateMobileData(message.payloadString);
   } else {
-      updater(message.payloadString);
+    updater(message.payloadString);
   }
 }
