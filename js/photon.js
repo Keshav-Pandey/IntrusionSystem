@@ -8,7 +8,7 @@ client.onMessageArrived = onMessageArrived;
 //Connect to client and add handler for on connection
 client.connect({
   onSuccess:onConnect,
-  username: "wgxqfbpe",
+  userName: "wgxqfbpe",
   password: "9Kt5K58lpYPD"});
 
 // Handler for on connect
