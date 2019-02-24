@@ -1,5 +1,5 @@
 // Create a client for connection
-var client = new Paho.MQTT.Client("wss://m16.cloudmqtt.com", Number(26185), "MobClientSubs" + localStorage.clientID );
+var client = new Paho.MQTT.Client("m16.cloudmqtt.com", Number(26185), "MobClientSubs" + localStorage.clientID );
 
 //Assign handlers for connection
 client.onConnectionLost = onConnectionLost;
@@ -9,7 +9,8 @@ client.onMessageArrived = onMessageArrived;
 client.connect({
   onSuccess:onConnect,
   userName: "wgxqfbpe",
-  password: "9Kt5K58lpYPD"});
+  password: "9Kt5K58lpYPD",
+  useSSL: true});
 
 // Handler for on connect
 function onConnect() {
