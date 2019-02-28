@@ -78,6 +78,9 @@ function saveClientID(){
   if (!localStorage.clientID) {
     localStorage.clientID = prompt("Please enter your client name");
   }
+  if (!localStorage.photonID) {
+    localStorage.photonID = prompt("Please enter your photon id");
+  }
 }
 
 function publishMobileInfo() {
@@ -88,6 +91,7 @@ function reset() {
   document.getElementById("houseGif").innerHTML = "<div style=\"width:100%;height:0;padding-bottom:56%;position:relative;\"><iframe src=\"https://giphy.com/embed/tHWaJAKfa7EWOBSNgQ\" width=\"100%\" height=\"100%\" style=\"position:absolute\" frameBorder=\"0\" class=\"giphy-embed\" allowFullScreen></iframe></div><p><a href=\"https://giphy.com/gifs/EuropeanSpaceAgency-animation-animated-tHWaJAKfa7EWOBSNgQ\"></a></p>";
   document.getElementById("reset").innerHTML = "";
 }
+
 saveClientID();
 saveAddress();
 setInterval(publishMobileInfo,30000);
