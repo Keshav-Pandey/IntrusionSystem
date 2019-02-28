@@ -18,9 +18,9 @@ function onConnect() {
   // Once a connection has been made, make a subscription to Mouse topic
   console.log("Connected");
   //Susbcribe to Alert status
-  client.subscribe("Alert");
+  client.subscribe(localStorage.photonID + "/Alert");
   //Susbcribe to Heartbeat
-  client.subscribe("Heartbeat");
+  client.subscribe(localStorage.photonID + "/Heartbeat");
   //Susbcribe to Mobile
   client.subscribe("Mobile");
 }
