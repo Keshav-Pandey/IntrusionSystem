@@ -22,7 +22,7 @@ function onConnect() {
   //Susbcribe to Heartbeat
   client.subscribe(localStorage.photonID + "/Heartbeat");
   //Susbcribe to Mobile
-  client.subscribe("Mobile");
+  client.subscribe(localStorage.photonID + "/Mobile");
 }
 
 // Handler for connection lost
