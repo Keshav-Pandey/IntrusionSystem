@@ -51,9 +51,9 @@ function reportPosition(position) {
   var lat = position.coords.latitude;
   var long = position.coords.longitude;
   if (lat - localStorage.lat + long - localStorage.long > 0.001){
-    client.send("Mobile", "Mobile" + localStorage.clientID + ":false", qos=0);
+    client.send(localStorage.photonID + "/Mobile", "Mobile" + localStorage.clientID + ":false", qos=0);
   } else {
-    client.send("Mobile", "Mobile" + localStorage.clientID + ":true", qos=0);
+    client.send(localStorage.photonID + "/Mobile", "Mobile" + localStorage.clientID + ":true", qos=0);
   }
 }
 
@@ -97,11 +97,11 @@ saveAddress();
 setInterval(publishMobileInfo,30000);
 
 //test function for alert
-function test(message) {
-  client.send("Alert", "Alert", qos=0);
+function test() {
+  client.send(localStorage.photonID + "/Alert", "Alert", qos=0);
 }
 
 //test function for mobile
 function test2(message) {
-  client.send("Mobile", message, qos=0);
+  client.send(localStorage.photonID + "/Mobile", message, qos=0);
 }
