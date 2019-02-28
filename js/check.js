@@ -17,6 +17,7 @@ function updater(data) {
       isHome = isHome || isTrue;
     }
   }
+  //Send an alert if no one is home
   if(!isHome) {
     alert("There has been a break in!");
     document.getElementById("houseGif").innerHTML = "<div style=\"width:100%;height:0;padding-bottom:56%;position:relative;\"><iframe src=\"https://giphy.com/embed/2siaob7JBzxLd8Qx9u\" width=\"100%\" height=\"100%\" style=\"position:absolute\" frameBorder=\"0\" class=\"giphy-embed\" allowFullScreen></iframe></div><p><a href=\"https://giphy.com/gifs/laffmobbslafftracks-trutv-laff-mobbs-tracks-lm118-2siaob7JBzxLd8Qx9u\">via GIPHY</a></p>";
@@ -42,11 +43,13 @@ function getHomeLocation() {
     }
   }
 
+//Save the current location of the client
 function savePosition(position) {
     localStorage.lat = position.coords.latitude;
     localStorage.long = position.coords.longitude;
 }
 
+//Send a report for the current position of the client
 function reportPosition(position) {
   var lat = position.coords.latitude;
   var long = position.coords.longitude;
@@ -57,6 +60,7 @@ function reportPosition(position) {
   }
 }
 
+//Track the status of your tracker and report it
 function trackLife(time){
     if((time - lastHeartBeat) > 10000){
         document.getElementById("status").innerHTML = "Please check on your tracker.";
@@ -66,6 +70,7 @@ function trackLife(time){
     lastHeartBeat = time;
 }
 
+//Save user's address as home address
 function saveAddress(){
     if (!localStorage.lat) {
         confirm("Shall we save your present location as your home address?");
@@ -83,17 +88,22 @@ function saveClientID(){
   }
 }
 
+//Publish the mobile's information
 function publishMobileInfo() {
   getLocation();
 }
 
+//Reset the alarm
 function reset() {
   document.getElementById("houseGif").innerHTML = "<div style=\"width:100%;height:0;padding-bottom:56%;position:relative;\"><iframe src=\"https://giphy.com/embed/tHWaJAKfa7EWOBSNgQ\" width=\"100%\" height=\"100%\" style=\"position:absolute\" frameBorder=\"0\" class=\"giphy-embed\" allowFullScreen></iframe></div><p><a href=\"https://giphy.com/gifs/EuropeanSpaceAgency-animation-animated-tHWaJAKfa7EWOBSNgQ\"></a></p>";
   document.getElementById("reset").innerHTML = "";
 }
 
+//Save the client id
 saveClientID();
+//Save the address
 saveAddress();
+//Publish your mobile details
 setInterval(publishMobileInfo,30000);
 
 //test function for alert
